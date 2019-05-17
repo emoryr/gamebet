@@ -3,14 +3,14 @@ package com.gamebet.gamebet.dto;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-public class PlayerDto implements Serializable {
+public class GameRoundDto implements Serializable {
 
     private static final long serialVersionUID = -8105241933692707649L;
 
     private Long id;
 
     @NotNull
-    private String name;
+    private Long playerId;
 
     private int coins;
 
@@ -22,12 +22,12 @@ public class PlayerDto implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Long getPlayerId() {
+        return playerId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPlayerId(Long playerId) {
+        this.playerId = playerId;
     }
 
     public int getCoins() {
@@ -36,8 +36,5 @@ public class PlayerDto implements Serializable {
 
     public void setCoins(int coins) {
         this.coins = coins;
-    }
-
-    public PlayerDto() {
     }
 }

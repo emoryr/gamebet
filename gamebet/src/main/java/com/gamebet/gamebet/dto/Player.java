@@ -67,7 +67,6 @@ public class Player implements Serializable {
     }
 
     public void normalBet() {
-        coins -= 10;
         int gain = 0;
         int randomValue = ThreadLocalRandom.current().nextInt(1,100);
         if (randomValue <= gainLikelihood) {
@@ -75,6 +74,6 @@ public class Player implements Serializable {
         }
         gain += freeBet();
 
-        coins += gain;
+        coins = gain;
     }
 }

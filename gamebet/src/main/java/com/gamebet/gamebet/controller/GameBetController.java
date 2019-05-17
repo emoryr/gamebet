@@ -1,5 +1,6 @@
 package com.gamebet.gamebet.controller;
 
+import com.gamebet.gamebet.dto.GameRound;
 import com.gamebet.gamebet.dto.Player;
 import com.gamebet.gamebet.dto.PlayerDto;
 import com.gamebet.gamebet.service.GameBetService;
@@ -16,10 +17,10 @@ public class GameBetController {
     @Autowired
     private GameBetService gameBetService;
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}/bet", method = RequestMethod.GET)
     public ResponseEntity bet(@PathVariable("id") Long id) {
 
-        Player player = gameBetService.search(id);
+        Player player = gameBetService.searchPlayer(id);
         if (player == null) {
             return ResponseEntity.status(HttpStatus.OK).body("User not found");
         }
@@ -36,4 +37,17 @@ public class GameBetController {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @RequestMapping(path = "/round/{id}", method = RequestMethod.GET)
+    public ResponseEntity loadRound(@PathVariable("id") Long id) {
+
+        GameRound gameRound = gameBetService.searchRound(id);
+        if (gameRound == null) {
+            return ResponseEntity.status(HttpStatus.OK).body("Round not found");
+        }
+        GameResponse<GameRound> response = new GameResponse<>(gameRound);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }

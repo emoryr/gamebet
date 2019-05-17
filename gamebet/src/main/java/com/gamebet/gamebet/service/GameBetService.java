@@ -1,8 +1,6 @@
 package com.gamebet.gamebet.service;
 
-import com.gamebet.gamebet.dto.Player;
-import com.gamebet.gamebet.dto.PlayerDto;
-import com.gamebet.gamebet.dto.PlayerRepository;
+import com.gamebet.gamebet.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -13,8 +11,17 @@ public class GameBetService {
     @Autowired
     private PlayerRepository playerRepository;
 
+    @Autowired
+    private GameRoundRepository gameRoundRepository;
+
     public Player normalBet(Player player) {
         player.normalBet();
+
+        GameRound gameRound = new GameRound();
+        gameRound.setCoins(player.getCoins());
+        gameRound.setPlayerId(player.getId());
+        gameRoundRepository.save(gameRound);
+
         return playerRepository.save(player);
     }
 
@@ -26,8 +33,13 @@ public class GameBetService {
         return playerRepository.save(player);
     }
 
-    public Player search(Long id) {
+    public Player searchPlayer(Long id) {
         Optional<Player> player = playerRepository.findById(id);
         return player == null ? null : player.get();
+    }
+
+    public GameRound searchRound(Long id) {
+        Optional<GameRound> gameRound = gameRoundRepository.findById(id);
+        return gameRound == null ? null : gameRound.get();
     }
 }
