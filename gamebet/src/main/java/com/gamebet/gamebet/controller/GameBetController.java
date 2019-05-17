@@ -1,11 +1,13 @@
 package com.gamebet.gamebet.controller;
 
 import com.gamebet.gamebet.dto.Player;
+import com.gamebet.gamebet.dto.PlayerDto;
 import com.gamebet.gamebet.service.GameBetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/bet")
@@ -22,6 +24,14 @@ public class GameBetController {
             return ResponseEntity.status(HttpStatus.OK).body("User not found");
         }
         player = gameBetService.normalBet(player);
+        GameResponse<Player> response = new GameResponse<>(player);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity create(@Valid @RequestBody PlayerDto playerDto) {
+        Player player = this.gameBetService.save(playerDto);
         GameResponse<Player> response = new GameResponse<>(player);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
