@@ -5,10 +5,7 @@ import com.gamebet.gamebet.service.GameBetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bet")
@@ -22,7 +19,7 @@ public class GameBetController {
 
         Player player = gameBetService.search(id);
         if (player == null) {
-            return ResponseEntity.status(HttpStatus.OK).body("Not found user");
+            return ResponseEntity.status(HttpStatus.OK).body("User not found");
         }
         player = gameBetService.normalBet(player);
         GameResponse<Player> response = new GameResponse<>(player);

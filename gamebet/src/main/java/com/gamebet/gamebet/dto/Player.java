@@ -3,6 +3,7 @@ package com.gamebet.gamebet.dto;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Component
@@ -10,6 +11,9 @@ import java.io.Serializable;
 public class Player implements Serializable {
 
     private static final long serialVersionUID = -6888542263201514002L;
+    static final int gainLikelihood = 30;
+    static final int freeLikelihood = 10;
+    static  final int valueWin = 20;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,5 +47,34 @@ public class Player implements Serializable {
 
     public void setCoins(int coins) {
         this.coins = coins;
+    }
+
+    /**
+     *
+     * @return the gain from free rounds
+     */
+    public int freeBet() {
+        int gain = 0;
+        int randonValue = ThreadLocalRandom.current().nextInt(1,100);
+        while (randonValue <= freeLikelihood) {
+            if (randonValue <= gainLikelihood) {
+                gain += valueWin;
+            }
+            randonValue = ThreadLocalRandom.current().nextInt(1,100);
+        }
+
+        return gain;
+    }
+
+    public void normalBet() {
+        coins -= 10;
+        int gain = 0;
+        int randomValue = ThreadLocalRandom.current().nextInt(1,100);
+        if (randomValue <= gainLikelihood) {
+            gain += valueWin;
+        }
+        gain += freeBet();
+
+        coins += gain;
     }
 }
