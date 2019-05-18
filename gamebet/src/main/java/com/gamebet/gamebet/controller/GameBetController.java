@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/bet")
@@ -49,5 +50,18 @@ public class GameBetController {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @RequestMapping(path = "/round/player/{id}", method = RequestMethod.GET)
+    public ResponseEntity loadRoundByPlayer(@PathVariable("id") Long playerId) {
+
+        List<GameRound> gameRound = gameBetService.searchRoundByPlayer(playerId);
+        if (gameRound.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body("Round by player not found");
+        }
+        GameResponse<List<GameRound>> response = new GameResponse<>(gameRound);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 
 }

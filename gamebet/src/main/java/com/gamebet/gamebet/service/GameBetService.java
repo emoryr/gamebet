@@ -3,6 +3,8 @@ package com.gamebet.gamebet.service;
 import com.gamebet.gamebet.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,5 +43,9 @@ public class GameBetService {
     public GameRound searchRound(Long id) {
         Optional<GameRound> gameRound = gameRoundRepository.findById(id);
         return gameRound == null ? null : gameRound.get();
+    }
+
+    public List<GameRound> searchRoundByPlayer(Long playerId) {
+        return gameRoundRepository.findAllByPlayerId(playerId);
     }
 }
