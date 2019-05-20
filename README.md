@@ -11,3 +11,4 @@ This endpoint allows to a player bets following the rules:
 
 * Needs to add OAuth 2 authentication
 * Increase unittest
+* Add Exception classes to deal with differents errors
